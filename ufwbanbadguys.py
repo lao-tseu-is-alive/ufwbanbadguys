@@ -7,7 +7,7 @@ import subprocess
 authLog = "/var/log/auth.log"
 whiteList = "config/WHITELIST"
 # set the maximum number of password errors before being
-maxAllowedErrors = 20
+maxAllowedErrors = 10
 
 # allows to test if ip is in Sunrise range
 def isSunriseIP(ip):
@@ -67,8 +67,8 @@ for ipKey in sorted(ipDic, key=ipDic.get, reverse=True):
                 cmdToRun += ("ufw insert 1 deny from {ip}\n".format(ip=ipKey))
                 cmdToLog += ("grep '{ip}' /var/log/auth.log > log/badguys/auth_{ip}.log\n".format(ip=ipKey))
                 info = ' WARNING you better BAN this IP'
-        print("{ip} : {count} --> {msg}".format(ip=ipKey, count=ipDic[ipKey], msg=info))
-    
-print("\nYou can run this commands:\n")
-print(cmdToRun)
-print(cmdToLog)
+        print("## {ip} : {count} --> {msg}".format(ip=ipKey, count=ipDic[ipKey], msg=info))
+if len(cmdToRun) > 0 :
+    print("\n##You can run this commands:\n")
+    print(cmdToRun)
+    print(cmdToLog)
